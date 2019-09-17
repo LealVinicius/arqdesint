@@ -1,5 +1,7 @@
 package br.usjt.hellospringboot.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +24,13 @@ public class LoginController {
 	}
 
 	@PostMapping("/fazerLogin")
-	public String fazerLogin(Usuario usuario) {
+	public String fazerLogin(HttpServletRequest request, Usuario usuario) {
 		if (loginService.logar(usuario)) {
+			request.getSession().setAttribute("usuarioLogado", usuario);
 			return "redirect:alunos";
 		} else {
 			return "login";
 		}
 	}
+
 }
